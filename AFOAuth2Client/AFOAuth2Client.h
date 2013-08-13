@@ -143,6 +143,8 @@
  */
 @property (readonly, nonatomic) NSString *refreshToken;
 
+@property (readonly, nonatomic) NSDate *expiration;
+
 /**
  
  */
