@@ -52,12 +52,43 @@
 ///------------------------------------------------
 
 /**
+ Creates and initializes an `AFOAuth2Client` object with the specified base URL, client identifier, secret, and custom service provider identifier.
  
+ @param url The base URL for the HTTP client. This argument must not be `nil`.
+ @param clientID The client identifier issued by the authorization server, uniquely representing the registration information provided by the client.
+ @param secret The client secret.
+ @param serviceProviderIdentifier The service provider identifier
+ 
+ @return The newly-initialized OAuth 2 client
  */
-+ (instancetype)clientWithBaseURL:(NSURL *)url clientID:(NSString *)clientID secret:(NSString *)secret;
++ (instancetype)clientWithBaseURL:(NSURL *)url
+                         clientID:(NSString *)clientID
+                           secret:(NSString *)secret
+        serviceProviderIdentifier:(NSString *)serviceProviderIdentifier;
 
 /**
+ Initializes an `AFOAuth2Client` object with the specified base URL, client identifier, secret, and custom service provider identifier.
  
+ @param url The base URL for the HTTP client. This argument must not be `nil`.
+ @param clientID The client identifier issued by the authorization server, uniquely representing the registration information provided by the client.
+ @param secret The client secret.
+ @param serviceProviderIdentifier The service provider identifier
+ 
+ @return The newly-initialized OAuth 2 client
+ */
+- (id)initWithBaseURL:(NSURL *)url
+             clientID:(NSString *)clientID
+               secret:(NSString *)secret
+serviceProviderIdentifier:(NSString *)serviceProviderIdentifier;
+
+/**
+ Initializes an `AFOAuth2Client` object with the specified base URL, client identifier, and secret.
+
+ @param url The base URL for the HTTP client. This argument must not be `nil`.
+ @param clientID The client identifier issued by the authorization server, uniquely representing the registration information provided by the client.
+ @param secret The client secret.
+
+ @return The newly-initialized OAuth 2 client
  */
 - (id)initWithBaseURL:(NSURL *)url
              clientID:(NSString *)clientID

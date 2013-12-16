@@ -53,26 +53,44 @@ static NSMutableDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *i
 + (instancetype)clientWithBaseURL:(NSURL *)url
                          clientID:(NSString *)clientID
                            secret:(NSString *)secret
+        serviceProviderIdentifier:(NSString *)serviceProviderIdentifier
 {
-    return [[self alloc] initWithBaseURL:url clientID:clientID secret:secret];
+    return [[self alloc] initWithBaseURL:url clientID:clientID secret:secret serviceProviderIdentifier:serviceProviderIdentifier];
+}
+
++ (instancetype)clientWithBaseURL:(NSURL *)url
+                         clientID:(NSString *)clientID
+                           secret:(NSString *)secret
+{
+    return [[self class] clientWithBaseURL:url clientID:clientID secret:secret serviceProviderIdentifier:nil];
+}
+
+- (id)initWithBaseURL:(NSURL *)url
+             clientID:(NSString *)clientID
+               secret:(NSString *)secret
+serviceProviderIdentifier:(NSString *)serviceProviderIdentifier
+{
+    NSParameterAssert(clientID);
+    
+    self = [super initWithBaseURL:url];
+    if (!self) {
+        return nil;
+    }
+    
+    self.serviceProviderIdentifier = (serviceProviderIdentifier ?: [self.baseURL host]);
+    self.clientID = clientID;
+    self.secret = secret;
+    
+    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    
+    return self;
 }
 
 - (id)initWithBaseURL:(NSURL *)url
              clientID:(NSString *)clientID
                secret:(NSString *)secret
 {
-    self = [super initWithBaseURL:url];
-    if (!self) {
-        return nil;
-    }
-
-    self.serviceProviderIdentifier = [self.baseURL host];
-    self.clientID = clientID;
-    self.secret = secret;
-
-    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-
-    return self;
+    return [self initWithBaseURL:url clientID:clientID secret:secret serviceProviderIdentifier:nil];
 }
 
 #pragma mark -
@@ -264,6 +282,7 @@ static NSMutableDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *i
 #pragma mark Keychain
 
 #ifdef _SECURITY_SECITEM_H_
+
 
 + (BOOL)storeCredential:(AFOAuthCredential *)credential
          withIdentifier:(NSString *)identifier
