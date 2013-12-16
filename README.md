@@ -2,8 +2,6 @@
 
 AFOAuth2Client is an extension for [AFNetworking](http://github.com/AFNetworking/AFNetworking/) that greatly simplifies the process of authenticating against an [OAuth 2](http://oauth.net/2/) provider.
 
-This is still in early stages of development, so proceed with caution when using this in a production application. Any bug reports, feature requests, or general feedback at this point would be greatly appreciated.
-
 ## Example Usage
 
 ``` objective-c
@@ -13,6 +11,7 @@ AFOAuth2Client *oauthClient = [AFOAuth2Client clientWithBaseURL:url clientID:kCl
 [oauthClient authenticateUsingOAuthWithPath:@"/oauth/token"
                                    username:@"username"
                                    password:@"password"
+                                      scope:@"email"
                                     success:^(AFOAuthCredential *credential) {
                                         NSLog(@"I have a token! %@", credential.accessToken);
                                         [AFOAuthCredential storeCredential:credential withIdentifier:oauthClient.serviceProviderIdentifier];
@@ -21,6 +20,10 @@ AFOAuth2Client *oauthClient = [AFOAuth2Client clientWithBaseURL:url clientID:kCl
                                         NSLog(@"Error: %@", error);
                                     }];
 ```
+
+## Documentation
+
+Documentation for all releases of AFOAuth1Client, including the latest, are [available on CocoaDocs](http://cocoadocs.org/docsets/AFOAuth2Client/).
 
 ## Contact
 
